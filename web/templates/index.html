@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTTPS Certificate Validator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1>HTTPS Certificate Validator</h1>
+      <p>Connects with TLS, reads the X.509 certificate and runs seven security checks.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <form id="form" autocomplete="off">
+        <div class="fields">
+          <label class="grow">Website or URL
+            <input id="target" type="text" placeholder="example.com or https://example.com" required maxlength="2048">
+          </label>
+          <label class="port">Port
+            <input id="port" type="number" min="1" max="65535" placeholder="443">
+          </label>
+          <button id="go" type="submit">Validate</button>
+        </div>
+        <label class="check">
+          <input id="lab-ca" type="checkbox"> Trust the lab Root CA (needed for the local lab on localhost)
+        </label>
+      </form>
+      <div class="lab">
+        <span>Local lab (start <code>python lab/serve.py</code> first):</span>
+        <div id="lab-buttons"></div>
+      </div>
+    </section>
+
+    <section id="result" hidden>
+      <div id="verdict" class="verdict"></div>
+      <div id="error" class="panel error" hidden></div>
+
+      <div id="details">
+        <div class="panel">
+          <h2>Reasons</h2>
+          <ul id="reasons"></ul>
+          <p id="notes" class="muted"></p>
+        </div>
+        <div class="panel">
+          <h2>Security checks</h2>
+          <table id="checks"></table>
+        </div>
+        <div class="columns">
+          <div class="panel">
+            <h2>Certificate</h2>
+            <dl id="cert"></dl>
+          </div>
+          <div class="panel">
+            <h2>TLS connection</h2>
+            <dl id="tls"></dl>
+          </div>
+        </div>
+      </div>
+      <p id="disclaimer" class="muted"></p>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
